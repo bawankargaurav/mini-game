@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Nut !</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Creepster&family=DynaPuff:wght@400..700&family=Emilys+Candy&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+    html {
+        cursor: url("hammer0.png")5 25, pointer;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-image: url("R.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        font-family: "Bungee Spice", sans-serif;
+        letter-spacing: 1px;
+    }
+
+
+
+
+    button:hover {
+        background-color: greenyellow;
+    }
+
+    html:active {
+        cursor: url("hammer1.png")10 18, pointer;
+    }
+
+    button {
+        cursor: inherit;
+    }
+
+    .gridcont {
+        margin-top: 42px;
+        margin-left: 20px;
+
+        opacity: 0.8;
+        display: grid;
+        grid-template-areas:
+            'a a a a a a a a a '
+            'a a a a a a a a a '
+            'a a a a a a a a a '
+            'a a a a a a a a a '
+            'a a a a a a a a a ';
+
+        gap: 0px;
+        background-color: #b9bfc500;
+        padding: 0px;
+
+        /* border: 1px solid black; */
+        height: 610px;
+        width: 915px;
+
+    }
+
+    .gridcont>div {
+        /* border: 1px black solid; */
+        color: rgb(255, 255, 255);
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 98px;
+        height: 120px;
+        transition-timing-function: ease-in-out;
+    }
+
+    #game-time {
+        position: absolute;
+        font-size: 21px;
+        color: blanchedalmond;
+        padding: 3px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        z-index: 99;
+        top: 20px;
+    }
+
+
+    #game-point {
+
+        position: absolute;
+        top: 27px;
+        left: 13px;
+        font-size: 24px;
+        font-weight: bold;
+        color: rgb(255, 255, 255);
+
+        padding: 3px;
+        border-radius: 2px;
+        letter-spacing: 2px;
+    }
+
+
+    #startButton {
+        width: 510px;
+        height: 370px;
+        z-index: 99;
+        position: absolute;
+        top: 130px;
+        left: 499px;
+        background-color: rgba(217, 240, 194, 0);
+        font-size: 20px;
+        font-family: "Creepster", system-ui;
+        letter-spacing: 2px;
+        border-radius: 700px;
+        filter: drop-shadow(0 0 10px rgba(231, 208, 60, 0.8)) drop-shadow(0 0 20px rgba(220, 231, 60, 0.6)) drop-shadow(0 0 30px rgba(231, 185, 60, 0.4));
+        border: 0px;
+
+    }
+
+    #startButton:hover {
+        filter: drop-shadow(0 0 10px rgba(128, 231, 60, 0.8)) drop-shadow(0 0 20px rgba(146, 231, 60, 0.6)) drop-shadow(0 0 30px rgba(80, 231, 60, 0.4));
+
+    }
+
+
+
+    #zombie {
+        height: 120px;
+        opacity: 1;
+        padding-bottom: 20px;
+    }
+
+    #zombie2 {
+        height: 120px;
+        opacity: 1;
+        padding-bottom: 20px;
+    }
+
+    #mess {
+        z-index: 999;
+        position: absolute;
+        width: 500px;
+        animation: fadeIn 5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            width: 20px;
+        }
+
+        to {
+            opacity: 1;
+            width: 500px;
+        }
+    }
+
+    #scr {
+
+        position: absolute;
+        width: 1700px;
+        height: 1000px;
+        background-color: rgba(255, 0, 0, 0);
+
+    }
+
+    #reload {
+        position: absolute;
+        z-index: 999;
+        background-color: rgba(0, 255, 255, 0.273);
+
+        border-radius: 40px;
+        top: 36px;
+        border: 2px solid white;
+        right: 90px;
+        padding: 10px;
+    }
+
+    #reload:hover {
+
+        border: 2px solid greenyellow;
+        background-color: rgba(172, 255, 47, 0.799);
+    }
+</style>
+
+<body>
+    <div id="game-time">Time Lapsed : 0</div>
+    <div id="game-point">0 Hits !</div>
+    <button id="startButton"><img src="Untitled_design-removebg-preview (1).png"></button>
+    <button id="reload" onclick="reload()"><img src="reload.png"></button>
+    <div class="gridcont"></div>
+</body>
+<script>
+    // Create an audio object with a sound file
+    const clickSound = new Audio("whack.mp3"); // Replace with the path to your sound file
+    const ZomRoar = new Audio('Voicy_Zombie brain sound effects.mp3');
+    const ZomRoar2 = new Audio('Voicy_Zombie roaring sound effect.mp3');
+    const GameOver = new Audio('1209.MP3');
+    const nutLaugh = new Audio('short-high-pitched-laugh-242960.mp3');
+    // Play sound on click
+    document.addEventListener("click", () => {
+        clickSound.currentTime = 0; // Reset the sound to the beginning
+        clickSound.play().catch(error => console.error("Error playing sound:", error));
+    });
+
+
+    // Create an audio object for background music
+    const bgMusic = new Audio('1206.MP3'); // Replace with the path to your music file
+    bgMusic.loop = true; // Enable looping
+    bgMusic.volume = 1; // Set the volume (0.0 to 1.0)
+
+    // Start game and play music after button click
+    document.getElementById('startButton').addEventListener('click', () => {
+        bgMusic.play().catch((err) => {
+            console.error('Error playing music:', err);
+        });
+
+        // Hide the start button and show the game
+        document.getElementById('startButton').style.display = 'none';
+        startGame();
+
+
+    });
+    const gridContainer = document.querySelector('.gridcont');
+    const struc = document.querySelector('body');
+    let gameTime = 0; // Time in seconds
+    const timeDisplay = document.querySelector('#game-time'); // Element to display time
+    const PointsDisplay = document.querySelector('#game-point'); // Element to display score
+    let gamePts = 0;
+    let disappearDelay = 3000;
+    let og
+    let og1
+
+
+    // Function to generate grid cells
+    function createGrid() {
+        for (let i = 1; i <= 45; i++) {
+            const gridItem = document.createElement('div');
+            gridItem.id = `${i}`; // Unique ID for each item
+            gridContainer.appendChild(gridItem);
+
+            //z1
+            let zombie = document.createElement("img");
+            zombie.src = "Conehead.webp";
+            zombie.id = `zombie`;
+
+            gridItem.appendChild(zombie);
+
+            let zombie2 = document.createElement("img");
+            zombie2.src = "zomb2.gif";
+            zombie2.id = `zombie2`;
+
+
+            //im
+            let nut = document.createElement("img");
+            nut.id = `nut`;
+            nut.src = "nut.png";
+
+            //z3
+            let zombie3 = document.createElement("img");
+            zombie3.id = `zombie3`;
+            zombie3.src = "giphy.gif";
+
+            //click function
+            gridItem.addEventListener('click', function clickme() {
+
+                let im = gridItem.querySelector('#nut');
+                let z1 = gridItem.querySelector('#zombie');
+                let z2 = gridItem.querySelector('#zombie2');
+                let z3 = gridItem.querySelector('#zombie3');
+                const mess = document.createElement('img');
+                const FrzScrn = document.createElement('div');
+                FrzScrn.id = `scr`;
+
+
+
+
+                if (im) {
+                    gamePts += 1;
+                    gridItem.textContent = '';
+                    gridItem.appendChild(zombie);
+                    PointsDisplay.textContent = `${gamePts} Hits !`;
+                }
+
+                else if (z1) {
+
+
+                    gridItem.textContent = '';
+                    gridItem.appendChild(zombie2);
+                    ZomRoar.currentTime = 0; // Reset the sound to the beginning
+                    ZomRoar.play().catch(error => console.error("Error playing sound:", error));
+                }
+
+                else if (z2) {
+
+
+
+                    gridItem.textContent = '';
+                    gridItem.appendChild(zombie3);
+                    ZomRoar2.currentTime = 0; // Reset the sound to the beginning
+                    ZomRoar2.play().catch(error => console.error("Error playing sound:", error));
+
+                }
+
+                else if (z3) {
+                    ZomRoar2.currentTime = 0; // Reset the sound to the beginning
+                    ZomRoar2.play().catch(error => console.error("Error playing sound:", error));
+
+                    bgMusic.loop = false;
+                    bgMusic.pause();
+                    clearInterval(og);
+                    clearInterval(og1);
+                    finalMus();
+                    mess.src = 'mess.webp';
+                    mess.id = `mess`;
+                    struc.appendChild(mess);
+                    struc.appendChild(FrzScrn);
+
+
+                }
+
+
+
+
+            });
+        }
+    }
+    function finalMus() {
+        GameOver.currentTime = 0; // Reset the sound to the beginning
+        GameOver.play().catch(error => console.error("Error playing sound:", error));
+
+
+    };
+
+    function reload() {
+
+        location.reload();
+    };
+
+    // Function to randomly show an item in a grid cell
+    function showRandomItem() {
+
+        let nut = document.createElement("img");
+        nut.id = `nut`;
+        nut.src = "nut.png";
+
+        //z3
+        let zombie3 = document.createElement("img");
+        zombie3.id = `zombie3`;
+        zombie3.src = "giphy.gif";
+
+        //z2
+        let zombie2 = document.createElement("img");
+        zombie2.src = "zomb2.gif";
+        zombie2.id = `zombie2`;
+
+
+
+        const randomIndex = Math.ceil(Math.random() * 45);
+        let gridItem = document.getElementById(randomIndex);
+        let z3 = gridItem.querySelector('#zombie3');
+        let z2 = gridItem.querySelector('#zombie2');
+        let z1 = gridItem.querySelector('#zombie');
+
+
+
+        gridItem.textContent = '';
+        gridItem.appendChild(nut);
+        nutLaugh.currentTime = 0; // Reset the sound to the beginning
+        nutLaugh.play().catch(error => console.error("Error playing sound:", error));
+
+
+
+        let zombie = document.createElement("img");
+        zombie.id = `zombie`;
+        zombie.src = "Conehead.webp";
+
+
+        // // Set a timeout to make the item disappear after a certain interval
+        setTimeout(() => {
+            gridItem.textContent = '';
+            if (z1) {
+
+                gridItem.appendChild(zombie);
+
+            }
+
+            else if (z2) {
+
+                gridItem.appendChild(zombie2);
+
+            }
+
+            else if (z3) {
+
+                gridItem.appendChild(zombie3);
+
+            }
+
+
+        }, disappearDelay); // Item disappears after 'disappearDelay' milliseconds
+    }
+
+    // Function to update the game timer
+    function updateGameTime() {
+        gameTime++; // Increase time by 1 second
+        timeDisplay.textContent = `Time Lapsed : ${gameTime}`; // Display the time
+
+        // Reduce the disappearance delay as the game progresses
+        if (gameTime % 2 === 0 && disappearDelay >= 700) {
+            disappearDelay -= 100;
+        }
+    }
+    // Function to start the game and show random items at intervals
+    function startGame() {
+        createGrid();
+        og = setInterval(showRandomItem, 1000); // Calls item every 1 second
+        og1 = setInterval(updateGameTime, 1000);  // Updates the game time every 1 second
+    }
+</script>
+
+</html>
